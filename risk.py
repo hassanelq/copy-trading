@@ -2,10 +2,16 @@
 
 from datetime import datetime, date
 from schemas import TradeSignal
+from config import MAX_DAILY_TRADES, MAX_OPEN_POSITIONS, MAX_EXPOSURE
 
 
 class RiskManager:
-    def __init__(self, max_daily_trades=20, max_open_positions=5, max_exposure=5000):
+    def __init__(
+        self,
+        max_daily_trades=MAX_DAILY_TRADES,
+        max_open_positions=MAX_OPEN_POSITIONS,
+        max_exposure=MAX_EXPOSURE,
+    ):
         self.max_daily_trades = max_daily_trades
         self.max_open_positions = max_open_positions
         self.max_exposure = max_exposure

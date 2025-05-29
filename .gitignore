@@ -1,6 +1,22 @@
+# Python virtual environment
 /.venv
 .env
 __pycache__/*
 .pytest_cache/
 __pycache__/db.cpython-312.pyc
 
+
+venv/
+env/
+
+# Environment variables
+.env
+.env.*
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
