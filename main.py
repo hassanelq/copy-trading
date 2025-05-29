@@ -7,7 +7,10 @@ from schemas import TradeSignal
 
 
 async def process_trade(signal: TradeSignal):
-    print("Processing:", signal)
+    print("✅ TradeSignal received:")
+    print(
+        f"{signal.coin} | {signal.side} | Qty: {signal.qty} @ {signal.price} | {signal.ts} | {signal.address}"
+    )
 
 
 if __name__ == "__main__":
