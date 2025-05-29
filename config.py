@@ -19,6 +19,7 @@ SYMBOL_CONFIG = {
     "SOL": {"binance": "SOLUSDT", "leverage": 10},
     "ARB": {"binance": "ARBUSDT", "leverage": 8},
     "LINK": {"binance": "LINKUSDT", "leverage": 5},
+    "FARTCOIN": {"binance": "FARTCOINUSDT", "leverage": 10},
 }
 
 LEVERAGE_DEFAULT = 10
