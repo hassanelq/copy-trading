@@ -11,8 +11,21 @@ BINANCE_API_SECRET = "7afd9a79a48db4933b8b7e98e6f092de403182fcb465ec5c14e27b6b30
 BINANCE_BASE_URL = "https://testnet.binancefuture.com"
 
 # Trading parameters
+
+# ✅ Symbol mappings and leverage overrides
+SYMBOL_CONFIG = {
+    "ETH": {"binance": "ETHUSDT", "leverage": 15},
+    "BTC": {"binance": "BTCUSDT", "leverage": 20},
+    "SOL": {"binance": "SOLUSDT", "leverage": 10},
+    "ARB": {"binance": "ARBUSDT", "leverage": 8},
+    "LINK": {"binance": "LINKUSDT", "leverage": 5},
+}
+
 LEVERAGE_DEFAULT = 10
 SIZE_MULTIPLIER = 1.5
+MAX_DAILY_TRADES = 20
+MAX_OPEN_POSITIONS = 5
+MAX_EXPOSURE = 5000  # USD
 ADDRESS_LIST = [
     "0x4b66f4048a0a90fd5ff44abbe5d68332656b78b8",
     "0xca230e816bdb34a46960c2f978a30a563d1ae9e0",

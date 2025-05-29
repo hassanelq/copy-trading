@@ -2,7 +2,7 @@
 
 import asyncio
 from listener import HLListener
-from config import ADDRESS_LIST
+from config import ADDRESS_LIST, MAX_DAILY_TRADES, MAX_OPEN_POSITIONS, MAX_EXPOSURE
 from schemas import TradeSignal
 from translator import translate_signal
 from executor import BinanceExecutor
@@ -16,7 +16,11 @@ logger = setup_logger("main")
 
 # Initialize system components
 executor = BinanceExecutor()
-risk_mgr = RiskManager(max_daily_trades=20, max_open_positions=5, max_exposure=5000)
+risk_mgr = RiskManager(
+    max_daily_trades=MAX_DAILY_TRADES,
+    max_open_positions=MAX_OPEN_POSITIONS,
+    max_exposure=MAX_EXPOSURE,
+)
 notifier = Notifier()
 # db = DBHandler()
 
