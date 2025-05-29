@@ -60,11 +60,16 @@ class HLListener:
             symbol = fill.get("coin")
             side = "BUY" if fill.get("isTaker") else "SELL"
             qty = float(fill.get("base"))
-            price = float(fill.get("px"))
+            Execution_price = float(fill.get("px"))  # Execution price (in USDT)
             ts = datetime.fromtimestamp(fill.get("time") / 1000)
 
             signal = TradeSignal(
-                coin=symbol, side=side, qty=qty, price=price, ts=ts, address=user
+                coin=symbol,
+                side=side,
+                qty=qty,
+                price=Execution_price,
+                ts=ts,
+                address=user,
             )
 
             logger.info(f"📥 TradeSignal received: {signal}")
