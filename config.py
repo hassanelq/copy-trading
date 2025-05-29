@@ -20,6 +20,7 @@ SYMBOL_CONFIG = {
     "ARB": {"binance": "ARBUSDT", "leverage": 8},
     "LINK": {"binance": "LINKUSDT", "leverage": 5},
     "FARTCOIN": {"binance": "FARTCOINUSDT", "leverage": 10},
+    "TRUMP": {"binance": "TRUMPUSDT", "leverage": 10},
 }
 
 LEVERAGE_DEFAULT = 10
@@ -37,7 +38,6 @@ ADDRESS_LIST = [
     "0xe9c2df5b14c7f476e8a5895d5b0c6b015e87bf2e",
     "0x8fc7c0442e582bca195978c5a4fdec2e7c5bb0f7",
     "0x9bf759b22E365D8b94a0679faf1010c0C7A78004",
-    "0x4b66f4048a0a90fd5ff44abbe5d68332656b78b8",
     "0x4f93fead39b70a1824f981a54d4e55b278e9f760",
     "0x9dea4d13ac1c469b7fe9049d43835df1be143ec0",
     "0x420ab45e0bd8863569a5efbb9c05d91f40624641",
