@@ -32,6 +32,7 @@ class HLListener:
 
                     async for message in ws:
                         await self.handle_message(message, callback)
+
             except Exception as e:
                 logger.error(f"WebSocket error: {e}")
                 logger.info("Reconnecting in 5 seconds...")
@@ -40,15 +41,16 @@ class HLListener:
     async def subscribe_user_fills(self, address: str):
         sub_msg = {
             "method": "subscribe",
-            "params": {"channel": "userFills", "user": address},
+            "subscription": {"type": "userFills", "user": address},
         }
         await self.ws.send(json.dumps(sub_msg))
-        logger.info(f"Subscribed to fills for {address}")
+        logger.info(f"Subscribed to userFills for {address}")
 
     async def handle_message(
         self, raw_msg: str, callback: Callable[[TradeSignal], None]
     ):
         msg = json.loads(raw_msg)
+
         if msg.get("channel") != "userFills":
             return
 
@@ -65,5 +67,5 @@ class HLListener:
                 coin=symbol, side=side, qty=qty, price=price, ts=ts, address=user
             )
 
-            logger.info(f"Received TradeSignal: {signal}")
+            logger.info(f"📥 TradeSignal received: {signal}")
             await callback(signal)

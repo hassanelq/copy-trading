@@ -16,7 +16,7 @@ logger = setup_logger("main")
 
 # Initialize system components
 executor = BinanceExecutor()
-risk_mgr = RiskManager(max_daily_trades=20, max_open_positions=5, max_exposure=5000)
+risk_mgr = RiskManager(max_daily_trades=5, max_open_positions=3, max_exposure=1000)
 notifier = Notifier()
 # db = DBHandler()
 
@@ -49,23 +49,30 @@ async def process_trade(signal: TradeSignal):
         logger.info(msg)
         notifier.send(msg)
 
-    except ValueError as ve:
-        warn_msg = f"⚠️ Trade skipped: {ve}"
-        logger.warning(warn_msg)
-        notifier.send(warn_msg)
     except Exception as e:
         err_msg = f"❗ Error: {e}"
         logger.error(err_msg)
         notifier.send(err_msg)
 
 
-async def main():
-    listener = HLListener(ADDRESS_LIST)
-    await listener.listen(process_trade)
+async def test_multiple_trades():
+    """Simulate multiple trades to test all components"""
+    test_signals = [
+        TradeSignal("ETH", "BUY", 0.01, 3500.0, None, "0xtest1"),
+        TradeSignal("BTC", "BUY", 0.001, 60000.0, None, "0xtest2"),
+        TradeSignal("SOL", "BUY", 0.5, 150.0, None, "0xtest3"),
+        TradeSignal("ETH", "SELL", 0.005, 3550.0, None, "0xtest1"),
+        TradeSignal("LINK", "BUY", 2, 16.5, None, "0xtest4"),  # may be blocked
+        TradeSignal("ARB", "BUY", 10, 1.2, None, "0xtest5"),  # may be blocked
+    ]
+
+    for signal in test_signals:
+        await process_trade(signal)
+        await asyncio.sleep(2)  # Slight delay for clarity/log spacing
 
 
 if __name__ == "__main__":
     try:
-        asyncio.run(main())
+        asyncio.run(test_multiple_trades())
     except KeyboardInterrupt:
         print("\n🔌 Bot stopped by user.")
