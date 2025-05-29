@@ -1,2 +1,16 @@
+# Python virtual environment
 /.venv
+venv/
+env/
+
+# Environment variables
 .env
+.env.*
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/

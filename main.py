@@ -10,7 +10,7 @@ from risk import RiskManager
 from utils import setup_logger
 from notifier import Notifier
 
-# from db import DBHandler
+from db import DBHandler
 
 logger = setup_logger("main")
 
@@ -22,7 +22,7 @@ risk_mgr = RiskManager(
     max_exposure=MAX_EXPOSURE,
 )
 notifier = Notifier()
-# db = DBHandler()
+db = DBHandler()
 
 
 async def process_trade(signal: TradeSignal):
@@ -41,13 +41,13 @@ async def process_trade(signal: TradeSignal):
         executor.market_order(trade["symbol"], trade["side"], trade["qty"])
         risk_mgr.update_exposure(signal)
 
-        # db.record_trade(
-        #     symbol=trade["symbol"],
-        #     side=trade["side"],
-        #     qty=trade["qty"],
-        #     price=signal.price,
-        #     source_address=signal.address,
-        # )
+        db.record_trade(
+            symbol=trade["symbol"],
+            side=trade["side"],
+            qty=trade["qty"],
+            price=signal.price,
+            source_address=signal.address,
+        )
 
         msg = f"✅ Trade Executed:\n*{trade['side']} {trade['qty']} {trade['symbol']}*"
         logger.info(msg)
