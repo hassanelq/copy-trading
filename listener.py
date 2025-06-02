@@ -17,25 +17,29 @@ class HLListener:
         self.addresses = addresses
         self.ws = None
         self.initial_connection_done = False
+        self.subscriptions_logged = False
 
     async def listen(self, callback: Callable[[TradeSignal], None]):
         while True:
             try:
                 async with websockets.connect(HL_WS_URL) as ws:
                     self.ws = ws
+
                     if not self.initial_connection_done:
-                        logger.info("✅ Connected to Hyperliquid WebSocket")
-                        self.initial_connection_done = True
+                        logger.info("🌐✅🌐 Connected to Hyperliquid WebSocket")
 
                     for addr in self.addresses:
                         await self.subscribe_user_fills(addr)
+
+                    self.initial_connection_done = True
+                    self.subscriptions_logged = True
 
                     async for message in ws:
                         await self.handle_message(message, callback)
 
             except Exception as e:
-                logger.error(f"❌ WebSocket error: {e}")
-                logger.warning("🔄 Attempting reconnect in 5 seconds...")
+                logger.error(f"🌐❌🌐 WebSocket error: {e}")
+                logger.warning("🌐🔄🌐 Attempting reconnect in 5 seconds...")
                 await asyncio.sleep(5)
 
     async def subscribe_user_fills(self, address: str):
@@ -44,7 +48,8 @@ class HLListener:
             "subscription": {"type": "userFills", "user": address},
         }
         await self.ws.send(json.dumps(sub_msg))
-        if not self.initial_connection_done:
+
+        if not self.subscriptions_logged:
             logger.info(f"🛰️ Subscribed to userFills for {address}")
 
     async def handle_message(
